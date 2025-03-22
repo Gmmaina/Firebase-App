@@ -38,10 +38,10 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
     private fun createUser() {
-        val username = binding.username.getText().toString()
-        val email = binding.email.getText().toString()
-        val password = binding.password.getText().toString()
-        val confirmPassword = binding.confirmPassword.getText().toString()
+        val username = binding.username.getText().toString().trim()
+        val email = binding.email.getText().toString().trim()
+        val password = binding.password.getText().toString().trim()
+        val confirmPassword = binding.confirmPassword.getText().toString().trim()
 
         if (username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             showErrorMessage("Please fill in all fields")

@@ -34,11 +34,14 @@ class LoginActivity : AppCompatActivity() {
         binding.signInBtn.setOnClickListener {
             loginUser()
         }
+        binding.forgotPass.setOnClickListener {
+           TODO()
+        }
     }
 
     private fun loginUser() {
-        val email: String = binding.email.getText().toString()
-        val password: String = binding.password.getText().toString()
+        val email: String = binding.email.getText().toString().trim()
+        val password: String = binding.password.getText().toString().trim()
 
         if (email.isEmpty() || password.isEmpty()) {
             showErrorMessage("Please fill in all fields")
@@ -55,21 +58,8 @@ class LoginActivity : AppCompatActivity() {
                 finish()
             }, 2000)
             showSuccessMessage()
-        }.addOnFailureListener { exception ->
-            val errorMessage = when (exception.message) {
-                "There is no user record corresponding to this identifier. The user may have been deleted." ->
-                    "No account found with this email."
-
-                "The password is invalid or the user does not have a password." ->
-                    "Wrong email or password."
-
-                "The user account has been disabled by an administrator." ->
-                    "This account has been disabled."
-
-                else ->
-                    "Failed to login. Please try again."
-            }
-            showErrorMessage(errorMessage)
+        }.addOnFailureListener {
+            showErrorMessage("Failed to create account!")
         }
 
     }
