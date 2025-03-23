@@ -14,10 +14,20 @@ import com.example.firebaseapp.databinding.ActivitySignUpBinding
 import com.google.firebase.auth.FirebaseAuth
 import java.util.regex.Pattern
 import androidx.core.graphics.toColorInt
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ServerValue
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
     private lateinit var auth: FirebaseAuth
+    private lateinit var db : FirebaseDatabase
+    private lateinit var root : DatabaseReference
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +36,8 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
+        db = FirebaseDatabase.getInstance()
+        root = db.reference.child("Users")
 
         binding.navToLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
@@ -36,6 +48,11 @@ class SignUpActivity : AppCompatActivity() {
         binding.signupBtn.setOnClickListener {
             createUser()
         }
+    }
+
+    fun getFormattedDate(): String {
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return sdf.format(System.currentTimeMillis())
     }
     private fun createUser() {
         val username = binding.username.getText().toString().trim()
@@ -60,11 +77,29 @@ class SignUpActivity : AppCompatActivity() {
             return
         }
 
-        auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener { 
-            showSuccessMessage()
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener (this) { task ->
+            if (task.isSuccessful){
+                val userId = auth.currentUser?.uid
+                if (userId != null){
+                    val userData = mapOf(
+                        "User ID" to userId,
+                        "Username" to username,
+                        "Email" to email,
+                        "Created Time" to getFormattedDate()
+                    )
+
+                    root.push().setValue(userData)
+                        .addOnSuccessListener {
+                            showSuccessMessage()
+                            val intent = Intent(this, LoginActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }.addOnFailureListener{
+                            showErrorMessage("Failed to create account")
+                        }
+                }
+            }
+
         }.addOnFailureListener {
             showErrorMessage("Failed to create account")
         }
