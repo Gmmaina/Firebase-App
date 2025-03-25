@@ -8,11 +8,11 @@
     android:background="@color/white"
     tools:context=".SignUpActivity">
 
-    <!-- Top decorative banner -->
+    <!-- Top decorative view -->
     <View
-        android:id="@+id/topBanner"
+        android:id="@+id/topDecorView"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="80dp"
         android:background="@drawable/background_draw"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,10 +20,11 @@
 
     <!-- Sign Up Title -->
     <TextView
-        android:id="@+id/signupTitle"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="-25dp"
+        android:id="@+id/signupTv"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="-30dp"
         android:background="@drawable/button_background"
         android:gravity="center"
         android:text="@string/signup"
@@ -32,7 +33,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/topBanner" />
+        app:layout_constraintTop_toBottomOf="@id/topDecorView" />
 
     <!-- Status Message -->
     <TextView
@@ -42,20 +43,20 @@
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/signupTitle" />
+        app:layout_constraintTop_toBottomOf="@id/signupTv" />
 
     <!-- Form Container -->
     <ScrollView
-        android:id="@+id/formContainer"
+        android:id="@+id/formScrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         android:fillViewport="true"
-        android:overScrollMode="never"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/statusMessage">
@@ -72,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginVertical="8dp"
                 android:hint="@string/username"
                 app:startIconDrawable="@drawable/baseline_person_24"
                 app:hintTextColor="@color/gray">
@@ -92,7 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginVertical="8dp"
                 android:hint="@string/email_address"
                 app:startIconDrawable="@drawable/baseline_email_24"
                 app:hintTextColor="@color/gray">
@@ -112,7 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginVertical="8dp"
                 android:hint="@string/password"
                 app:endIconMode="password_toggle"
                 app:startIconDrawable="@drawable/baseline_lock_24"
@@ -133,7 +134,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginVertical="8dp"
                 android:hint="@string/confirm_password"
                 app:endIconMode="password_toggle"
                 app:startIconDrawable="@drawable/baseline_lock_24"
@@ -157,37 +158,39 @@
                 android:layout_marginTop="24dp"
                 android:backgroundTint="@color/backgroundColor"
                 android:text="@string/signup"
-                android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
-
-            <!-- Login Navigation -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="24dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/already_have_an_account"
-                    android:textColor="@color/gray" />
-
-                <TextView
-                    android:id="@+id/loginNavTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/login"
-                    android:textColor="@color/backgroundColor"
-                    android:textStyle="bold" />
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <!-- Bottom Navigation -->
+    <LinearLayout
+        android:id="@+id/bottomNavLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/already_have_an_account"
+            android:textColor="@color/gray" />
+
+        <TextView
+            android:id="@+id/loginNavTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/login"
+            android:textColor="@color/backgroundColor"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <!-- Loading Overlay -->
     <View

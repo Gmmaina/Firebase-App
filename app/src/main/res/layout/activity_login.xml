@@ -7,83 +7,86 @@
     android:background="@color/white"
     tools:context=".LoginActivity">
 
+    <!-- Top decorative view -->
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:background="@drawable/background_draw"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Login Title -->
     <TextView
         android:id="@+id/signupTv"
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:layout_marginTop="-25dp"
         android:background="@drawable/button_background"
+        android:gravity="center"
         android:text="@string/login"
-        android:textAlignment="center"
         android:textColor="@color/backgroundColor"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
+        app:layout_constraintTop_toBottomOf="@id/view" />
 
+
+    <!-- Form Container -->
     <LinearLayout
+        android:id="@+id/formContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="30dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupTv">
+        app:layout_constraintTop_toBottomOf="@id/signupTv">
 
+        <!-- Status Message -->
         <TextView
-            android:id="@+id/successErrorTv"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
+            android:id="@+id/statusMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:text=""
+            android:layout_gravity="center"
             android:textSize="20sp"
-            android:textStyle="italic"
             android:visibility="gone" />
 
+        <!-- Email Field -->
         <com.google.android.material.textfield.TextInputLayout
             style="@style/OutlinedRoundedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
+            android:layout_marginBottom="8dp"
             android:hint="@string/email_address"
             android:padding="8dp"
             app:hintTextColor="@color/gray"
             app:startIconDrawable="@drawable/baseline_email_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/email"
+                android:id="@+id/emailEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:minHeight="60dp"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Password Field -->
         <com.google.android.material.textfield.TextInputLayout
             style="@style/OutlinedRoundedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
+            android:layout_marginBottom="8dp"
             android:hint="@string/password"
             android:padding="8dp"
             app:endIconMode="password_toggle"
@@ -91,28 +94,29 @@
             app:startIconDrawable="@drawable/baseline_lock_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/password"
+                android:id="@+id/passwordEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:minHeight="60dp"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
-
+        <!-- Forgot Password -->
         <TextView
-            android:id="@+id/forgotPass"
+            android:id="@+id/forgotPassTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:text="@string/forgot_password"
             android:textColor="@color/backgroundColor"
-            android:textSize="22sp"
-            android:layout_gravity="end"/>
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
+        <!-- Login Button -->
         <Button
             android:id="@+id/signInBtn"
             android:layout_width="match_parent"
@@ -126,6 +130,7 @@
             android:textColor="@color/white"
             android:textStyle="bold" />
 
+        <!-- Sign Up Navigation -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -137,8 +142,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/don_t_have_an_account"
-                android:textColor="@color/gray"
-                android:textSize="18sp"/>
+                android:textColor="@color/gray" />
 
             <TextView
                 android:id="@+id/navToSignUp"
@@ -146,12 +150,29 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:text="@string/signup"
-                android:textSize="20sp"
-                android:textColor="@color/backgroundColor" />
-
-
+                android:textColor="@color/backgroundColor"
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </LinearLayout>
-
     </LinearLayout>
+
+    <!-- Loading Overlay -->
+    <View
+        android:id="@+id/loadingOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/semi_transparent_black"
+        android:visibility="gone" />
+
+    <!-- Progress Indicator -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
